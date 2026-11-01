@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: Apache-2.0
+
+manifest:
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: main
+      clone-depth: 1
+      import:
+        # By using name-allowlist we can clone only the modules that are
+        # strictly needed by the application.
+        name-allowlist:
+          - hal_espressif         # the ESP32-S3 on the EFZ board
+          - lvgl                  # the TFT display UI
+          - fatfs                 # the microSD card
+          - mbedtls               # Wi-Fi security
+          - tf-psa-crypto         # Wi-Fi security (used by mbedtls)
+          - tf-psa-crypto-drivers # Wi-Fi security (used by mbedtls)
