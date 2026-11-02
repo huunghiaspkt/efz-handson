@@ -1,6 +1,7 @@
 # efz-handson
 
-Hands-on Zephyr examples for the EFZ-ESP32S3 board.
+Hands-on Zephyr examples for the
+[EFZ-ESP32S3 board](https://embeddedfun.org/docs/zephyr-training/basic/efz-esp32s3-board/).
 
 This repository is a west manifest, laid out like Zephyr's
 [example-application](https://github.com/zephyrproject-rtos/example-application) (west T2):
