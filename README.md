@@ -21,9 +21,9 @@ will be cloned:
 ```shell
 # initialize efz-handson-ws for efz-handson (main branch)
 west init -m https://github.com/huunghiaspkt/efz-handson --mr main efz-handson-ws
-# update Zephyr and the modules
+# update Zephyr and the modules (latest commit only, no git history)
 cd efz-handson-ws
-west update
+west update --narrow -o=--depth=1
 west blobs fetch hal_espressif
 ```
 
