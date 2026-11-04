@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config APP_MODULE_IO
+	bool "Buttons and LEDs"
+	default y
+	select GPIO
+	select INPUT

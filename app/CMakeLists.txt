@@ -5,11 +5,31 @@
 # SPDX-License-Identifier: Apache-2.0
 
 cmake_minimum_required(VERSION 3.13.1)
+
+# 1.8" ST7735 by default, override with -DEXTRA_DTC_OVERLAY_FILE
+if(NOT DEFINED EXTRA_DTC_OVERLAY_FILE)
+  set(EXTRA_DTC_OVERLAY_FILE boards/efz_esp32s3_st7735_128x160.overlay)
+endif()
+
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
 project(app LANGUAGES C)
 
-target_sources(app PRIVATE src/main.c)
+target_include_directories(app PRIVATE src)
+target_sources(app PRIVATE
+  src/main.c
+  src/lcd/lcd_show.c
+)
+
+# Modules
+target_sources_ifdef(CONFIG_APP_MODULE_ENV app PRIVATE
+  src/modules/env/env.c
+  src/modules/env/env_page.c
+)
+target_sources_ifdef(CONFIG_APP_MODULE_IO app PRIVATE
+  src/modules/io/io.c
+  src/modules/io/io_page.c
+)
 
 # The code below locates the git index file for this repository and adds it as a dependency for
 # the application VERSION file so that if the repo has a new commit added, even if no files in

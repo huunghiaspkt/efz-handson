@@ -1,0 +1,86 @@
+/*
+ * EFZ-ESP32S3 + 1.8" TFT, ST7735, 128x160 portrait, SPI (8-pin header module).
+ *
+ * Jumper wires:
+ *   GND -> GND, VDD -> 3V3, SCL -> GPIO15, SDA -> GPIO14, RES -> GPIO13,
+ *   DC -> GPIO40, CS -> GPIO39, BL -> GPIO38.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/dt-bindings/mipi_dbi/mipi_dbi.h>
+#include <zephyr/dt-bindings/display/panel.h>
+
+/ {
+	chosen {
+		zephyr,display = &st7735r;
+	};
+
+	mipi_dbi {
+		compatible = "zephyr,mipi-dbi-spi";
+		spi-dev = <&spi2>;
+		dc-gpios = <&gpio1 8 GPIO_ACTIVE_HIGH>;		/* GPIO40 */
+		reset-gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;	/* GPIO13 */
+		write-only;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		/* init values from the st7735r_ada_160x128 shield */
+		st7735r: st7735r@0 {
+			compatible = "sitronix,st7735r";
+			reg = <0>;
+			mipi-max-frequency = <20000000>;
+			mipi-mode = "MIPI_DBI_MODE_SPI_4WIRE";
+			width = <128>;
+			height = <160>;
+			x-offset = <2>;
+			y-offset = <1>;
+			madctl = <0xc0>;
+			/* panel wants big-endian RGB565 */
+			rgb-is-inverted;
+			colmod = <0x55>;
+			vmctr1 = <0x0e>;
+			pwctr1 = [a2 02 84];
+			pwctr2 = [c5];
+			pwctr3 = [0a 00];
+			pwctr4 = [8a 2a];
+			pwctr5 = [8a ee];
+			frmctr1 = [01 2c 2d];
+			frmctr2 = [01 2c 2d];
+			frmctr3 = [01 2c 2d 01 2c 2d];
+			gamctrp1 = [02 1c 07 12 37 32 29 2d 29 25 2b 39 00 01 03 10];
+			gamctrn1 = [03 1d 07 06 2e 2c 29 2d 2e 2e 37 3f 00 00 02 10];
+		};
+	};
+};
+&pinctrl {
+	spim2_tft: spim2_tft {
+		group1 {
+			pinmux = <SPIM2_SCLK_GPIO15>,
+				 <SPIM2_CSEL_GPIO39>;
+		};
+
+		group2 {
+			pinmux = <SPIM2_MOSI_GPIO14>;
+			output-low;
+		};
+	};
+};
+
+&spi2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	pinctrl-0 = <&spim2_tft>;
+	pinctrl-names = "default";
+};
+
+/ {
+	leds {
+		/* high = on */
+		tft_bl: tft_backlight {
+			gpios = <&gpio1 6 GPIO_ACTIVE_HIGH>;	/* GPIO38 */
+			label = "TFT backlight";
+		};
+	};
+};

@@ -19,11 +19,16 @@ Initialize the workspace folder (`efz-handson-ws`), where `efz-handson`, Zephyr 
 will be cloned:
 
 ```shell
+# Python environment with west, inside the workspace folder
+python3 -m venv efz-handson-ws/.venv
+source efz-handson-ws/.venv/bin/activate
+pip install west
 # initialize efz-handson-ws for efz-handson (main branch)
 west init -m https://github.com/huunghiaspkt/efz-handson --mr main efz-handson-ws
 # update Zephyr and the modules (latest commit only, no git history)
 cd efz-handson-ws
 west update --narrow -o=--depth=1
+west packages pip --install
 west blobs fetch hal_espressif
 ```
 
@@ -55,6 +60,9 @@ with its demo code removed and the EFZ-ESP32S3 board in `boards/`:
 
 ```
 app/                                    the application
+app/src/lcd/                            the LCD: lcd_show_*() and its pages
+app/src/modules/                        one folder per part of the board (env: SHT30, io: buttons and LEDs)
+app/boards/                             the 1.8" ST7735 LCD overlay and its wiring
 boards/embeddedfun/efz_esp32s3/         the EFZ-ESP32S3 board
 doc/                                    Doxygen + Sphinx documentation
 drivers/                                out-of-tree drivers
