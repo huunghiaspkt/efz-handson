@@ -64,7 +64,6 @@ app/src/lcd/                            the LCD: lcd_show_*() and its pages
 app/src/modules/                        one folder per part of the board (env: SHT30, io: buttons and LEDs)
 app/boards/                             the 1.8" ST7735 LCD overlay and its wiring
 boards/embeddedfun/efz_esp32s3/         the EFZ-ESP32S3 board
-doc/                                    Doxygen + Sphinx documentation
 drivers/                                out-of-tree drivers
 dts/bindings/                           devicetree bindings, "embeddedfun" vendor prefix
 include/app/                            public headers for drivers/ and lib/
