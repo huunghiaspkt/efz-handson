@@ -13,7 +13,7 @@
 
 LOG_MODULE_REGISTER(env, CONFIG_APP_LOG_LEVEL);
 
-static const struct device *const sht30 = DEVICE_DT_GET_ONE(sensirion_sht3xd);
+static const struct device *const sht30 = DEVICE_DT_GET(DT_NODELABEL(sht30));
 
 static void env_thread(void *p1, void *p2, void *p3)
 {

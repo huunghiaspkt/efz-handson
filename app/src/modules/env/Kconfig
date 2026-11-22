@@ -3,5 +3,5 @@
 config APP_MODULE_ENV
 	bool "SHT30 temperature and humidity"
 	default y
-	depends on DT_HAS_SENSIRION_SHT3XD_ENABLED
+	depends on $(dt_nodelabel_enabled,sht30)
 	select SENSOR

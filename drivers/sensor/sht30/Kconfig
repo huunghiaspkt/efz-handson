@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config EFZ_SHT30
+	bool "SHT30 driver (efz-handson)"
+	default y
+	depends on DT_HAS_EMBEDDEDFUN_SHT30_ENABLED
+	select I2C
+	select CRC

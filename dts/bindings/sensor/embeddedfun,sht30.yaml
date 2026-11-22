@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: Apache-2.0
+
+description: Sensirion SHT30 temperature and humidity sensor (efz-handson driver)
+
+compatible: "embeddedfun,sht30"
+
+include: [sensor-device.yaml, i2c-device.yaml]

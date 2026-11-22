@@ -1,0 +1,4 @@
+/* Read the SHT30 with our own driver instead of Zephyr's sht3xd. */
+&sht30 {
+	compatible = "embeddedfun,sht30";
+};
